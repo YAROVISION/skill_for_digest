@@ -93,11 +93,7 @@ def normalize_filename(url_part: str) -> str:
 
 
 def load_known_files(list_path: str) -> set:
-    """Return a set of ORIGINAL (no-timestamp) file names already recorded.
-
-    Files stored as '1775151020585_Oglyad_KAS_12_2025.pdf' are normalised
-    to 'Oglyad_KAS_12_2025.pdf' so comparison with scraped names works.
-    """
+    """Return a set of ORIGINAL (no-timestamp) file names already recorded."""
     known = set()
     if not os.path.exists(list_path):
         return known
@@ -211,6 +207,11 @@ def main():
         raw_name = url.split('/')[-1]
         filename = normalize_filename(raw_name)
 
+        if filename.lower().startswith('zved_oglyad'):
+            print(f'[{i+1}/{len(pdf_links)}] ⏭  Skip (ignored prefix): {filename}')
+            skip_count += 1
+            continue
+
         if filename in known_files:
             print(f'[{i+1}/{len(pdf_links)}] ⏭  Skip (already exists): {filename}')
             skip_count += 1
@@ -234,6 +235,19 @@ def main():
     print(f'\n─── Scraper Finished ───')
     print(f'  Skipped (already known) : {skip_count}')
     print(f'  Downloaded & uploaded   : {new_count}')
+
+    if new_count > 0:
+        print(f'\n[MinIO] Updating remote list: lists/list_of_pdfs.md')
+        try:
+            client.fput_object(
+                MINIO_BUCKET,
+                "lists/list_of_pdfs.md",
+                LIST_FILE,
+                content_type='text/markdown'
+            )
+            print('✅ Remote list updated successfully.')
+        except Exception as e:
+            print(f'⚠️ Failed to update remote list: {e}')
 
 
 if __name__ == '__main__':

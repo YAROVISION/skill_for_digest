@@ -25,45 +25,20 @@
 
 ### [manual_a3]
 - **Category**: ЄСПЛ
-- **Start**: TADIĆ v. Croatia
+- **Start**: KÖYMEN v. Türkiye
 - **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
 
 ### [manual_a4]
 - **Category**: ЄСПЛ
-- **Start**: RUSU v. the Republic of Moldova
-- **End**: 3 квітня 2025 року та є остаточною.
+- **Start**: MIHAIL AND OTHERS v. Romania
+- **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
 
 ### [manual_a5]
 - **Category**: ЄСПЛ
-- **Start**: GORŠE v. Slovenia
+- **Start**: GEORGIOU v. Greece
 - **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
 
 ### [manual_a6]
 - **Category**: ЄСПЛ
-- **Start**: N. S. v. the United Kingdom
-- **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
-
-### [manual_a7]
-- **Category**: ЄСПЛ
-- **Start**: BRD – GROUPE SOCIÉTÉ GÉNÉRALE S. A. v. Romania
-- **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
-
-### [manual_a8]
-- **Category**: ЄСПЛ
-- **Start**: AYTAJ AHMADOVA v. Azerbaijan
-- **End**: статусу остаточного відповідно до пункту 2 статті 44 Конвенції.
-
-### [manual_a9]
-- **Category**: ЄСПЛ
-- **Start**: FARHAD MEHDIYEV v. Azerbaijan
-- **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
-
-### [manual_a10]
-- **Category**: ЄСПЛ
-- **Start**: BILYAVSKA v. Ukraine
-- **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.
-
-### [manual_a11]
-- **Category**: ЄСПЛ
-- **Start**: GIRGINOVA v. Bulgaria
+- **Start**: P. T. v. Moldova
 - **End**: остаточного відповідно до пункту 2 статті 44 Конвенції.

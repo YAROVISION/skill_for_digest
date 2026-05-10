@@ -16,6 +16,9 @@ ACCESS_KEY = os.getenv('MINIO_ACCESS_KEY')
 SECRET_KEY = os.getenv('MINIO_SECRET_KEY')
 BUCKET_NAME = os.getenv('MINIO_BUCKET', 'court-documents')
 
+LIST_FILE = os.path.join(os.path.dirname(__file__), 'lists', 'list_of_markdown.md')
+MISSING_LIST_FILE = os.path.join(os.path.dirname(__file__), 'lists', 'list_of_missing_markdownfiles.md')
+
 def get_minio_client():
     if not ENDPOINT or not ACCESS_KEY or not SECRET_KEY:
         print("❌ Error: MinIO credentials missing in .env.local")
@@ -58,35 +61,44 @@ def get_existing_markdown_folders(client):
     objects = client.list_objects(BUCKET_NAME, prefix='markdown/', recursive=False)
     for obj in objects:
         if obj.is_dir:
-            # obj.object_name is 'markdown/folder_name/'
             folder_name = obj.object_name.strip('/').split('/')[-1]
             folders.add(folder_name)
     return folders
+
+def append_to_list(filename):
+    """Append a new file name to the markdown list."""
+    with open(LIST_FILE, 'a', encoding='utf-8') as f:
+        f.write(f'- {filename}\n')
+
+def update_missing_list(missing_pdfs):
+    """Rewrite the missing markdown list file."""
+    with open(MISSING_LIST_FILE, 'w', encoding='utf-8') as f:
+        f.write("# List of PDFs missing corresponding Markdown folders\n\n")
+        for obj, norm_name in missing_pdfs:
+            f.write(f"- {os.path.basename(obj.object_name)}\n")
 
 def convert_pdfs_to_md(filename_filter=None):
     client = get_minio_client()
     if not client: return
 
     print(f"--- MinIO PDF to Markdown Conversion Agent ---")
-    print(f"Bucket: {BUCKET_NAME}")
     
-    # 1. Get existing markdown folders for comparison
     existing_folders = get_existing_markdown_folders(client)
-    print(f"[Discovery] Found {len(existing_folders)} existing markdown folders.")
-
-    # 2. List all PDF objects in the 'pdfs/' prefix
+    
     objects = client.list_objects(BUCKET_NAME, prefix='pdfs/', recursive=True)
     pdf_objects = [obj for obj in objects if obj.object_name.lower().endswith('.pdf')]
     
     if filename_filter:
         pdf_objects = [obj for obj in pdf_objects if filename_filter in obj.object_name]
         
-    print(f"[Discovery] Found {len(pdf_objects)} PDF files in storage.")
-
-    # 3. Filter PDFs that are missing from markdown/
     missing_pdfs = []
     for obj in pdf_objects:
         base_name = os.path.basename(obj.object_name)
+        
+        # Skip Zved_oglyad files
+        if base_name.lower().startswith('zved_oglyad'):
+            continue
+            
         name_no_ext = os.path.splitext(base_name)[0]
         normalized_name = normalize_name(name_no_ext)
         
@@ -94,53 +106,56 @@ def convert_pdfs_to_md(filename_filter=None):
             missing_pdfs.append((obj, normalized_name))
 
     print(f"[Discovery] {len(missing_pdfs)} PDFs need conversion.")
+    
+    # Update local missing list
+    update_missing_list(missing_pdfs)
+    
+    # Upload missing list to MinIO
+    print(f"[MinIO] Syncing missing list: lists/list_of_missing_markdownfiles.md")
+    try:
+        client.fput_object(BUCKET_NAME, "lists/list_of_missing_markdownfiles.md", MISSING_LIST_FILE, content_type='text/markdown')
+    except Exception as e:
+        print(f"⚠️ Failed to upload missing list: {e}")
 
-    # 4. Process missing PDFs
+    converted_count = 0
     for i, (obj, normalized_name) in enumerate(missing_pdfs):
         full_pdf_path = obj.object_name
         base_name = os.path.basename(full_pdf_path)
-        
         target_md_path = f"markdown/{normalized_name}/{normalized_name}.md"
 
         print(f"\n[Process {i+1}/{len(missing_pdfs)}] {base_name} -> {target_md_path}")
 
-        # Download to a temporary file
         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp_pdf:
             tmp_pdf_path = tmp_pdf.name
             try:
-                print(f"[Download] Fetching PDF...")
                 client.fget_object(BUCKET_NAME, full_pdf_path, tmp_pdf_path)
-
-                # Convert to Markdown
-                print(f"[Convert] Converting to Markdown...")
                 md_content = pymupdf4llm.to_markdown(tmp_pdf_path)
 
-                # Upload resulting Markdown
                 with tempfile.NamedTemporaryFile(mode='w', suffix=".md", delete=False, encoding='utf-8') as tmp_md:
                     tmp_md_path = tmp_md.name
                     tmp_md.write(md_content)
                 
-                print(f"[Upload] Saving...")
                 client.fput_object(BUCKET_NAME, target_md_path, tmp_md_path, content_type='text/markdown')
-                
                 print(f"✅ Success.")
+                append_to_list(normalized_name)
+                converted_count += 1
                 os.remove(tmp_md_path)
-
             except Exception as e:
                 print(f"❌ Error processing {base_name}: {str(e)}")
             finally:
                 if os.path.exists(tmp_pdf_path):
                     os.remove(tmp_pdf_path)
 
+    # Upload updated success list to MinIO
+    if converted_count > 0:
+        print(f"\n[MinIO] Updating remote success list: lists/list_of_markdown.md")
+        try:
+            client.fput_object(BUCKET_NAME, "lists/list_of_markdown.md", LIST_FILE, content_type='text/markdown')
+            print("✅ Remote success list updated.")
+        except Exception as e:
+            print(f"⚠️ Failed to update remote list: {e}")
+
 if __name__ == "__main__":
     f_filter = sys.argv[1] if len(sys.argv) > 1 else None
     convert_pdfs_to_md(f_filter)
     print("\n--- Conversion Agent Completed ---")
-
-# ── Команди запуску ────────────────────────────────────────────────────────────
-#
-# Обробити всі нові PDF-файли (яких немає у папці markdown):
-#   python3 agents/convert_pdfs_to_md.py
-#
-# Обробити конкретний файл за назвою (або частиною назви):
-#   python3 agents/convert_pdfs_to_md.py Daigest_VP_03_2026

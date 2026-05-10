@@ -61,7 +61,6 @@ class MinioStorage:
 
     def save_structured_json(self, doc_slug, article_id, structured_data):
         import json
-        import tempfile
         target_minio_path = f"structured/{doc_slug}/{article_id}.json"
         local_dir = f"documents/structured/{doc_slug}"
         local_path = f"{local_dir}/{article_id}.json"
@@ -71,4 +70,9 @@ class MinioStorage:
             json.dump(structured_data, f, ensure_ascii=False, indent=2)
             
         self.client.fput_object(self.bucket_name, target_minio_path, local_path, content_type='application/json')
+        return target_minio_path
+
+    def upload_skill(self, local_path, target_slug):
+        target_minio_path = f"skills_for_markdownfiles/skill_for_{target_slug}.md"
+        self.client.fput_object(self.bucket_name, target_minio_path, local_path, content_type='text/markdown')
         return target_minio_path
