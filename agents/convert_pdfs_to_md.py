@@ -94,8 +94,6 @@ def convert_pdfs_to_md(filename_filter=None):
     missing_pdfs = []
     for obj in pdf_objects:
         base_name = os.path.basename(obj.object_name)
-        
-        # Skip Zved_oglyad files
         if base_name.lower().startswith('zved_oglyad'):
             continue
             
@@ -106,12 +104,8 @@ def convert_pdfs_to_md(filename_filter=None):
             missing_pdfs.append((obj, normalized_name))
 
     print(f"[Discovery] {len(missing_pdfs)} PDFs need conversion.")
-    
-    # Update local missing list
     update_missing_list(missing_pdfs)
     
-    # Upload missing list to MinIO
-    print(f"[MinIO] Syncing missing list: lists/list_of_missing_markdownfiles.md")
     try:
         client.fput_object(BUCKET_NAME, "lists/list_of_missing_markdownfiles.md", MISSING_LIST_FILE, content_type='text/markdown')
     except Exception as e:
@@ -125,30 +119,32 @@ def convert_pdfs_to_md(filename_filter=None):
 
         print(f"\n[Process {i+1}/{len(missing_pdfs)}] {base_name} -> {target_md_path}")
 
-        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp_pdf:
-            tmp_pdf_path = tmp_pdf.name
-            try:
+        tmp_pdf_path = None
+        tmp_md_path = None
+        try:
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp_pdf:
+                tmp_pdf_path = tmp_pdf.name
                 client.fget_object(BUCKET_NAME, full_pdf_path, tmp_pdf_path)
-                md_content = pymupdf4llm.to_markdown(tmp_pdf_path)
+            
+            md_content = pymupdf4llm.to_markdown(tmp_pdf_path)
 
-                with tempfile.NamedTemporaryFile(mode='w', suffix=".md", delete=False, encoding='utf-8') as tmp_md:
-                    tmp_md_path = tmp_md.name
-                    tmp_md.write(md_content)
-                
-                client.fput_object(BUCKET_NAME, target_md_path, tmp_md_path, content_type='text/markdown')
-                print(f"✅ Success.")
-                append_to_list(normalized_name)
-                converted_count += 1
+            with tempfile.NamedTemporaryFile(mode='w', suffix=".md", delete=False, encoding='utf-8') as tmp_md:
+                tmp_md_path = tmp_md.name
+                tmp_md.write(md_content)
+            
+            client.fput_object(BUCKET_NAME, target_md_path, tmp_md_path, content_type='text/markdown')
+            print(f"✅ Success.")
+            append_to_list(normalized_name)
+            converted_count += 1
+        except Exception as e:
+            print(f"❌ Error processing {base_name}: {str(e)}")
+        finally:
+            if tmp_pdf_path and os.path.exists(tmp_pdf_path):
+                os.remove(tmp_pdf_path)
+            if tmp_md_path and os.path.exists(tmp_md_path):
                 os.remove(tmp_md_path)
-            except Exception as e:
-                print(f"❌ Error processing {base_name}: {str(e)}")
-            finally:
-                if os.path.exists(tmp_pdf_path):
-                    os.remove(tmp_pdf_path)
 
-    # Upload updated success list to MinIO
     if converted_count > 0:
-        print(f"\n[MinIO] Updating remote success list: lists/list_of_markdown.md")
         try:
             client.fput_object(BUCKET_NAME, "lists/list_of_markdown.md", LIST_FILE, content_type='text/markdown')
             print("✅ Remote success list updated.")

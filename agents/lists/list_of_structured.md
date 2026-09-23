@@ -166,3 +166,6 @@
 - Zved_daidzhest_VP_2024
 - fiche_thematique_comunity_designs
 - voen_stan_KGS_12_2025
+- Oglyad_KKS_civ_pozov (done)
+- Oglyad_KKS_03_2026 (done)
+- Oglyad_Prohod_derzh_slyzhbu_2019_03_2026 (done)

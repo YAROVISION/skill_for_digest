@@ -1,7 +1,10 @@
-minio
-ollama
-python-dotenv
-requests
-beautifulsoup4
-openai
-pymupdf4llm
+minio==7.2.20
+ollama==0.6.1
+python-dotenv==1.2.1
+requests==2.32.5
+beautifulsoup4==4.14.3
+openai==2.36.0
+pymupdf4llm==0.0.27
+streamlit>=1.32.0
+streamlit-extras>=0.4.0
+plotly>=5.19.0

@@ -169,6 +169,14 @@ class LegalSegmenterAgent:
     def _handle_skill_segmentation(self, doc_slug, clean_text, source_name, segments, guidance=""):
         existing_ids = self.storage.get_existing_ids(doc_slug)
         saved_count = 0
+        
+        # Track occurrence indices of start texts in the segments list
+        start_pattern_counts = {}
+        for seg in segments:
+            start_text = seg["start"]
+            start_pattern_counts[start_text] = start_pattern_counts.get(start_text, 0) + 1
+            seg["occurrence_index"] = start_pattern_counts[start_text] - 1
+
         for seg in segments:
             article_id = seg["id"]
             if f"{article_id}.json" in existing_ids: continue
@@ -181,7 +189,13 @@ class LegalSegmenterAgent:
                 short_start = seg["start"][:50]; start_pattern = make_fuzzy_pattern(short_start)
                 start_matches = list(re.finditer(start_pattern, clean_text, re.MULTILINE))
             if not start_matches: continue
-            start_match = start_matches[-1]
+            
+            occ_idx = seg.get("occurrence_index", 0)
+            if occ_idx < len(start_matches):
+                start_match = start_matches[occ_idx]
+            else:
+                start_match = start_matches[-1]
+                
             remaining_text = clean_text[start_match.end():]
             end_pattern = make_fuzzy_pattern(seg["end"])
             end_match = re.search(end_pattern, remaining_text, re.MULTILINE)
@@ -192,6 +206,7 @@ class LegalSegmenterAgent:
             structured_data = self._structure_article(article_raw, seg["category"], source_name, guidance)
             if structured_data:
                 self.storage.save_structured_json(doc_slug, article_id, structured_data)
+                print(f"      ✅ Saved {article_id} (via skill)")
                 saved_count += 1
         return saved_count
 

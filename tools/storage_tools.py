@@ -52,12 +52,18 @@ class MinioStorage:
 
     def get_object_content(self, object_name):
         import tempfile
-        with tempfile.NamedTemporaryFile(suffix=".md", delete=False) as tmp_md:
-            self.client.fget_object(self.bucket_name, object_name, tmp_md.name)
-            with open(tmp_md.name, 'r', encoding='utf-8') as f:
+        tmp_md_path = None
+        try:
+            with tempfile.NamedTemporaryFile(suffix=".md", delete=False) as tmp_md:
+                tmp_md_path = tmp_md.name
+                self.client.fget_object(self.bucket_name, object_name, tmp_md_path)
+            
+            with open(tmp_md_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-        os.remove(tmp_md.name)
-        return content
+            return content
+        finally:
+            if tmp_md_path and os.path.exists(tmp_md_path):
+                os.remove(tmp_md_path)
 
     def save_structured_json(self, doc_slug, article_id, structured_data):
         import json

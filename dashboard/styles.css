@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+/* Main font override */
+html, body, [class*="css"], .stMarkdown, p, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* Exclude material icons from global font override */
+[data-testid="stIconMaterial"] {
+    font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Symbols Sharp", "Material Icons" !important;
+}
+
+/* Gradient Title */
+.main-title {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+/* Premium Card design for metrics and containers */
+div[data-testid="stMetric"] {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    
+    /* Force card to behave as a flex item and stretch */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+div[data-testid="stMetric"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Ensure equal height layout for metric columns */
+div[data-testid="stColumn"]:has(div[data-testid="stMetric"]) {
+    display: flex;
+}
+
+div[data-testid="stColumn"]:has(div[data-testid="stMetric"]) > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+div[data-testid="stColumn"]:has(div[data-testid="stMetric"]) [data-testid="stElementContainer"] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+div[data-testid="stMetric"] > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+/* Custom styling for status indicators */
+.status-pill {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pill-green {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pill-red {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-pill-orange {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Custom container for document explorer layout */
+.doc-box {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid #3b82f6;
+}
+
+.doc-box-done {
+    border-left: 4px solid #10b981;
+}
+
+.doc-box-missing {
+    border-left: 4px solid #f59e0b;
+}
+
+/* Console logs area styling */
+.log-container {
+    background-color: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 0.85rem !important;
+}
