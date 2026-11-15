@@ -9,6 +9,8 @@
 documents/
 temp/
 scratch/
+agents/pdfs/
+*.pdf
 *.json
 !package.json
 

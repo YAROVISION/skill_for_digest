@@ -1,0 +1,113 @@
+---
+title: Дайджест Daidzhest_KAS_Ukrainy_2025_roku_(1)
+category: source_moc
+digest_slug: Daidzhest_KAS_Ukrainy_2025_roku_(1)
+segments_count: 99
+last_updated: 2026-09-24
+---
+
+# Дайджест: Daidzhest_KAS_Ukrainy_2025_roku_(1)
+
+- **Шлях до сегментів:** `agents/segments/Daidzhest_KAS_Ukrainy_2025_roku_(1)/`
+- **Кількість сегментів:** 99
+
+## Перелік сегментів дайджесту
+- `00_Preamble.md`
+- `01.01_segment.md`
+- `01.10_segment.md`
+- `01.11_segment.md`
+- `01.12_segment.md`
+- `01.13_segment.md`
+- `01.14_segment.md`
+- `01.15_segment.md`
+- `01.16_segment.md`
+- `01.17_segment.md`
+- `01.18_segment.md`
+- `01.19_segment.md`
+- `01.20_segment.md`
+- `01.21_segment.md`
+- `01.2_segment.md`
+- `01.3_segment.md`
+- `01.4_segment.md`
+- `01.5_segment.md`
+- `01.6_segment.md`
+- `01.7_segment.md`
+- `01.8_segment.md`
+- `01.9_segment.md`
+- `02.02_segment.md`
+- `02.10_segment.md`
+- `02.11_segment.md`
+- `02.12_segment.md`
+- `02.13_segment.md`
+- `02.14_segment.md`
+- `02.15_segment.md`
+- `02.16_segment.md`
+- `02.17_segment.md`
+- `02.18_segment.md`
+- `02.19_segment.md`
+- `02.1_segment.md`
+- `02.3_segment.md`
+- `02.4_segment.md`
+- `02.5_segment.md`
+- `02.6_segment.md`
+- `02.7_segment.md`
+- `02.8_segment.md`
+- `02.9_segment.md`
+- `03.03_segment.md`
+- `03.10_segment.md`
+- `03.11_segment.md`
+- `03.12_segment.md`
+- `03.1_segment.md`
+- `03.2_segment.md`
+- `03.4_segment.md`
+- `03.5_segment.md`
+- `03.6_segment.md`
+- `03.7_segment.md`
+- `03.8_segment.md`
+- `03.9_segment.md`
+- `04.04_segment.md`
+- `04.10_segment.md`
+- `04.11_segment.md`
+- `04.12_segment.md`
+- `04.13_segment.md`
+- `04.14_segment.md`
+- `04.1_segment.md`
+- `04.2_segment.md`
+- `04.3_segment.md`
+- `04.5_segment.md`
+- `04.6_segment.md`
+- `04.7_segment.md`
+- `04.8_segment.md`
+- `04.9_segment.md`
+- `05.05_segment.md`
+- `05.10_segment.md`
+- `05.11_segment.md`
+- `05.12_segment.md`
+- `05.13_segment.md`
+- `05.1_segment.md`
+- `05.2_segment.md`
+- `05.3_segment.md`
+- `05.4_segment.md`
+- `05.6_segment.md`
+- `05.7_segment.md`
+- `05.8_segment.md`
+- `05.9_segment.md`
+- `06.06_segment.md`
+- `06.1_segment.md`
+- `06.2_segment.md`
+- `06.3_segment.md`
+- `06.4_segment.md`
+- `06.5_segment.md`
+- `06.7_segment.md`
+- `06.8_segment.md`
+- `06.9_segment.md`
+- `07.1_segment.md`
+- `07.2_segment.md`
+- `07.3_segment.md`
+- `08.1_segment.md`
+- `08.2_segment.md`
+- `08.3_segment.md`
+- `08.4_segment.md`
+- `08.5_segment.md`
+- `08.6_segment.md`
+- `08.7_segment.md`

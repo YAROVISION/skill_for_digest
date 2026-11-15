@@ -5,3 +5,12 @@ gatherUsageStats = false
 headless = true
 port = 8501
 address = "0.0.0.0"
+enableStaticServing = true
+
+[theme]
+base = "dark"
+primaryColor = "#7de9ff"
+backgroundColor = "#04060c"
+secondaryBackgroundColor = "#0a0e1a"
+textColor = "#eaeffa"
+font = "sans serif"

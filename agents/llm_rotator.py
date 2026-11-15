@@ -35,10 +35,10 @@ class LLMRotator:
 
         self.providers = [
             {
-                "name": "groq",
-                "base_url": "https://api.groq.com/openai/v1",
-                "api_key": os.getenv("GROQ_API_KEY"),
-                "model": "llama-3.3-70b-versatile"
+                "name": "cerebras_qwen",
+                "base_url": "https://api.cerebras.ai/v1",
+                "api_key": os.getenv("CEREBRAS_API_KEY"),
+                "model": "qwen-3.8-27b"
             },
             {
                 "name": "cerebras",
@@ -47,10 +47,16 @@ class LLMRotator:
                 "model": "gpt-oss-120b"
             },
             {
-                "name": "cerebras_glm",
-                "base_url": "https://api.cerebras.ai/v1",
-                "api_key": os.getenv("CEREBRAS_API_KEY"),
-                "model": "zai-glm-4.7"
+                "name": "groq",
+                "base_url": "https://api.groq.com/openai/v1",
+                "api_key": os.getenv("GROQ_API_KEY"),
+                "model": "meta-llama/llama-prompt-guard-2-22m"
+            },
+            {
+                "name": "groq_86m",
+                "base_url": "https://api.groq.com/openai/v1",
+                "api_key": os.getenv("GROQ_API_KEY"),
+                "model": "meta-llama/llama-prompt-guard-2-86m"
             },
             {
                 "name": "sambanova",
@@ -62,14 +68,26 @@ class LLMRotator:
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "api_key": os.getenv("NVIDIA_API_KEY"),
-                "model": "qwen/qwen3-coder-480b-a35b-instruct"
+                "model": "bigcode/starcoder2-15b"
             },
             {
                 "name": "nvidia_glm",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "api_key": os.getenv("NVIDIA_API_KEY"),
-                "model": "z-ai/glm-5.1",
+                "model": "z-ai/glm-5.3-flash",
                 "extra_body": {"chat_template_kwargs": {"enable_thinking": True, "clear_thinking": False}}
+            },
+            {
+                "name": "nvidia_guard",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "api_key": os.getenv("NVIDIA_API_KEY"),
+                "model": "nvidia/llama-3.1-nemotron-safety-guard-8b-v3"
+            },
+            {
+                "name": "nvidia_mistral_nemotron",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "api_key": os.getenv("NVIDIA_API_KEY"),
+                "model": "mistralai/codestral-22b-instruct-v0.1"
             },
             {
                 "name": "cloudflare",
@@ -81,7 +99,7 @@ class LLMRotator:
                 "name": "openrouter",
                 "base_url": "https://openrouter.ai/api/v1",
                 "api_key": os.getenv("OPENROUTERFORSKILLFORDIGEST"),
-                "model": "poolside/laguna-m.1:free"
+                "model": "particle-ai/particle-1:free"
             },
             {
                 "name": "ollama",

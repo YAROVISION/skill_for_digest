@@ -1,49 +1,258 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
-/* Main font override */
-html, body, [class*="css"], .stMarkdown, p, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif !important;
+/* ═══════════════════════════════════════════════════════════════
+   QuickLiquid Glass Theme for Legal AI Agent Dashboard
+   Based on: https://github.com/amarnath3003/quickLiquid
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    --bg: #04060c;
+    --bg-soft: #0a0e1a;
+    --panel: rgba(148, 163, 184, 0.06);
+    --panel-hover: rgba(148, 163, 184, 0.10);
+    --panel-solid: #0c1120;
+    --line: rgba(148, 163, 184, 0.14);
+    --line-strong: rgba(148, 163, 184, 0.28);
+    --text: #eaeffa;
+    --muted: rgba(234, 239, 250, 0.62);
+    --faint: rgba(234, 239, 250, 0.36);
+    --acc-a: #7de9ff;
+    --acc-b: #6d8bff;
+    --acc-c: #c084fc;
+    --coral: #ff9d7a;
+    --grad: linear-gradient(95deg, var(--acc-a), var(--acc-b) 48%, var(--acc-c));
+    --radius: 16px;
+    --radius-lg: 20px;
+    --font: 'Outfit', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+    --glass-rim: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.72);
+    --spring: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Exclude material icons from global font override */
+/* Global Font & Base Surface */
+html, body, [class*="css"], .stMarkdown, p, h1, h2, h3, h4, h5, h6, label, input, textarea, select, button {
+    font-family: var(--font) !important;
+    color: var(--text);
+}
+
+/* Preserve Material Symbols */
 [data-testid="stIconMaterial"] {
     font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Symbols Sharp", "Material Icons" !important;
 }
 
-/* Gradient Title */
+code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
+    font-family: var(--mono) !important;
+}
+
+::selection {
+    background: rgba(125, 233, 255, 0.35);
+    color: #fff;
+}
+
+/* Custom QuickLiquid Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #24437a, #45327a);
+    border-radius: 8px;
+    border: 2px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #3b6cc4, #704cc4);
+}
+
+/* App Background */
+[data-testid="stAppViewContainer"] {
+    background: radial-gradient(1200px 700px at 15% -10%, rgba(109, 139, 255, 0.10), transparent 60%),
+                radial-gradient(900px 600px at 85% 10%, rgba(192, 132, 252, 0.09), transparent 55%),
+                var(--bg) !important;
+    color: var(--text) !important;
+}
+
+[data-testid="stMain"] {
+    position: relative;
+    z-index: 1;
+}
+
+/* Transparent Glass Top Header */
+[data-testid="stHeader"] {
+    background: rgba(4, 6, 12, 0.55) !important;
+    backdrop-filter: blur(16px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
+    border-bottom: 1px solid var(--line) !important;
+}
+
+/* Ambient Goo Field (QuickLiquid Signature Background) */
+.goo-field {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.38;
+    overflow: hidden;
+}
+
+.goo-layer {
+    position: absolute;
+    inset: -80px;
+    filter: url(#page-goo);
+}
+
+.goo-blob {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+}
+
+.goo-blob.gb1 {
+    width: 360px;
+    height: 360px;
+    top: 4%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(23, 60, 140, 0.55), rgba(23, 60, 140, 0.16) 70%);
+    animation: ql-goo-a 34s ease-in-out infinite alternate;
+}
+
+.goo-blob.gb2 {
+    width: 280px;
+    height: 280px;
+    top: 16%;
+    right: -4%;
+    background: radial-gradient(circle, rgba(88, 40, 150, 0.48), rgba(88, 40, 150, 0.14) 70%);
+    animation: ql-goo-b 41s ease-in-out infinite alternate;
+}
+
+.goo-blob.gb3 {
+    width: 230px;
+    height: 230px;
+    top: 52%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(16, 88, 120, 0.45), rgba(16, 88, 120, 0.12) 70%);
+    animation: ql-goo-b 29s ease-in-out infinite alternate-reverse;
+}
+
+.goo-blob.gb4 {
+    width: 310px;
+    height: 310px;
+    bottom: 6%;
+    right: 10%;
+    background: radial-gradient(circle, rgba(37, 52, 132, 0.46), rgba(37, 52, 132, 0.12) 70%);
+    animation: ql-goo-a 37s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes ql-goo-a {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(110px, 65px, 0) scale(1.22); }
+}
+
+@keyframes ql-goo-b {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-90px, 80px, 0) scale(1.18); }
+}
+
+/* Sidebar: Thick Frosted Liquid Glass */
+[data-testid="stSidebar"] {
+    background: rgba(10, 14, 26, 0.72) !important;
+    backdrop-filter: blur(22px) saturate(1.8) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.8) !important;
+    border-right: 1px solid var(--line) !important;
+    box-shadow: 12px 0 40px -20px rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border-color: var(--line) !important;
+}
+
+/* Hero & Display Typography */
+.ql-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(125, 233, 255, 0.08);
+    border: 1px solid rgba(125, 233, 255, 0.24);
+    box-shadow: var(--glass-rim);
+    backdrop-filter: blur(6px) saturate(1.5);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--acc-a);
+    margin-bottom: 0.75rem;
+}
+
 .main-title {
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    font-weight: 600 !important;
+    font-size: clamp(2rem, 3.6vw, 2.85rem) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.1 !important;
+    margin: 0 0 0.4rem 0 !important;
+    color: var(--text) !important;
+}
+
+.main-title .ink {
+    font-style: italic;
+    font-weight: 500;
+    background: var(--grad);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-weight: 700;
-    font-size: 2.8rem;
-    margin-bottom: 0.5rem;
-    display: inline-block;
+    padding-right: 0.08em;
 }
 
-/* Premium Card design for metrics and containers */
+.ql-subtitle {
+    color: var(--muted) !important;
+    font-size: 1.02rem !important;
+    margin-bottom: 1.25rem !important;
+}
+
+/* Regular Liquid Glass Metric Cards */
 div[data-testid="stMetric"] {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.2rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    
-    /* Force card to behave as a flex item and stretch */
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.075) 0%, rgba(148, 163, 184, 0.04) 100%) !important;
+    backdrop-filter: blur(14px) saturate(1.7) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.7) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 1.25rem 1.35rem !important;
+    box-shadow: var(--glass-rim), var(--glass-shadow) !important;
+    transition: transform 0.28s var(--spring), box-shadow 0.28s ease, border-color 0.28s ease !important;
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 div[data-testid="stMetric"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-3px);
+    border-color: rgba(125, 233, 255, 0.42) !important;
+    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(109, 139, 255, 0.32) !important;
 }
 
-/* Ensure equal height layout for metric columns */
+div[data-testid="stMetricLabel"] p {
+    color: var(--muted) !important;
+    font-size: 0.86rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em;
+}
+
+div[data-testid="stMetricValue"] {
+    color: var(--text) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Equal height layout for metric columns */
 div[data-testid="stColumn"]:has(div[data-testid="stMetric"]) {
     display: flex;
 }
@@ -69,56 +278,469 @@ div[data-testid="stMetric"] > div {
     justify-content: flex-start;
 }
 
-/* Custom styling for status indicators */
+/* Pill Buttons (Primary Gradient & Ghost Glass) */
+button[kind="primary"], [data-testid="stFormSubmitButton"] button {
+    background: var(--grad) !important;
+    color: #051018 !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+    padding: 0.55rem 1.35rem !important;
+    box-shadow: 0 8px 30px -8px rgba(109, 139, 255, 0.6) !important;
+    transition: transform 0.2s var(--spring), box-shadow 0.2s ease !important;
+}
+
+button[kind="primary"] *, [data-testid="stFormSubmitButton"] button * {
+    color: #051018 !important;
+}
+
+button[kind="primary"]:hover:not(:disabled), [data-testid="stFormSubmitButton"] button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 38px -8px rgba(125, 233, 255, 0.72) !important;
+}
+
+button[kind="secondary"], [data-testid="stDownloadButton"] button {
+    background: rgba(148, 163, 184, 0.08) !important;
+    backdrop-filter: blur(8px) saturate(1.5) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--line-strong) !important;
+    border-radius: 999px !important;
+    font-weight: 500 !important;
+    box-shadow: var(--glass-rim) !important;
+    transition: transform 0.2s var(--spring), background 0.2s ease, border-color 0.2s ease !important;
+}
+
+button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] button:hover:not(:disabled) {
+    background: rgba(148, 163, 184, 0.16) !important;
+    border-color: rgba(125, 233, 255, 0.45) !important;
+    transform: translateY(-1px);
+}
+
+/* Metric-Card Action Button (PDF у agents/pdfs) */
+.st-key-scrape_pdfs_btn {
+    height: 100%;
+}
+
+.st-key-scrape_pdfs_btn button {
+    background: linear-gradient(155deg, rgba(125, 233, 255, 0.11) 0%, rgba(109, 139, 255, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(1.7) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.7) !important;
+    border: 1px solid rgba(125, 233, 255, 0.28) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--glass-rim), var(--glass-shadow) !important;
+    padding: 1.05rem 1.35rem !important;
+    min-height: 112px !important;
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    text-align: left !important;
+    transition: transform 0.28s var(--spring), box-shadow 0.28s ease, border-color 0.28s ease !important;
+}
+
+.st-key-scrape_pdfs_btn button:hover:not(:disabled) {
+    transform: translateY(-3px) !important;
+    border-color: rgba(125, 233, 255, 0.65) !important;
+    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(125, 233, 255, 0.36) !important;
+}
+
+.st-key-scrape_pdfs_btn button p {
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    color: var(--text) !important;
+}
+
+/* Tabs as QuickLiquid Pill Chips */
+[data-testid="stTabs"] [role="tablist"] {
+    gap: 8px;
+    background: rgba(148, 163, 184, 0.05);
+    backdrop-filter: blur(10px) saturate(1.5);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+[data-testid="stTabs"] button[role="tab"] {
+    border-radius: 999px !important;
+    padding: 6px 18px !important;
+    color: var(--muted) !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    transition: all 0.2s var(--spring) !important;
+}
+
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(125, 233, 255, 0.16), rgba(109, 139, 255, 0.18)) !important;
+    color: var(--text) !important;
+    border-color: rgba(125, 233, 255, 0.4) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 16px -4px rgba(109, 139, 255, 0.35) !important;
+}
+
+[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+[data-testid="stTabs"] [data-baseweb="tab-border"] {
+    display: none !important;
+}
+
+/* Inputs, Textareas & Selectboxes (Thin Glass) */
+[data-baseweb="select"] > div,
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea {
+    background: rgba(12, 17, 32, 0.72) !important;
+    backdrop-filter: blur(8px) saturate(1.5) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 12px !important;
+    color: var(--text) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+[data-baseweb="select"] > div:focus-within,
+[data-testid="stTextInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus {
+    border-color: var(--acc-a) !important;
+    box-shadow: 0 0 0 2px rgba(125, 233, 255, 0.18) !important;
+}
+
+/* Expanders, Forms, Alerts & Dataframes */
+[data-testid="stExpander"],
+[data-testid="stForm"],
+[data-testid="stDataFrame"] {
+    background: var(--panel) !important;
+    backdrop-filter: blur(14px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.6) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--glass-rim) !important;
+}
+
+[data-testid="stForm"] {
+    padding: 1.25rem !important;
+}
+
+[data-testid="stAlert"] {
+    background: rgba(148, 163, 184, 0.07) !important;
+    backdrop-filter: blur(10px) saturate(1.5) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
+}
+
+/* Code / Console Logs */
+[data-testid="stCode"], pre {
+    background: #060a14 !important;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Status Pills */
 .status-pill {
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     border-radius: 9999px;
-    font-size: 0.875rem;
+    font-size: 0.84rem;
     font-weight: 600;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px) saturate(1.5);
+    box-shadow: var(--glass-rim);
 }
 
 .status-pill-green {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
 }
 
 .status-pill-red {
-    background-color: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: rgba(239, 68, 68, 0.14);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.35);
 }
 
 .status-pill-orange {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background-color: rgba(245, 158, 11, 0.14);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+}
+
+/* Document Explorer Markdown Viewer */
+.ql-markdown-viewer {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(12, 17, 32, 0.65));
+    backdrop-filter: blur(14px) saturate(1.6);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-rim), var(--glass-shadow);
+    padding: 1.25rem 1.4rem;
+    height: 750px;
+    overflow-y: auto;
+    line-height: 1.65;
 }
 
 /* Custom container for document explorer layout */
 .doc-box {
-    background-color: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
+    background-color: var(--panel);
+    backdrop-filter: blur(12px) saturate(1.5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     padding: 1rem;
     margin-bottom: 0.75rem;
-    border-left: 4px solid #3b82f6;
+    border-left: 4px solid var(--acc-b);
 }
 
 .doc-box-done {
-    border-left: 4px solid #10b981;
+    border-left: 4px solid #34d399;
 }
 
 .doc-box-missing {
-    border-left: 4px solid #f59e0b;
+    border-left: 4px solid #fbbf24;
 }
 
-/* Console logs area styling */
-.log-container {
-    background-color: #0f172a !important;
-    border: 1px solid #334155 !important;
-    border-radius: 8px !important;
-    padding: 1rem !important;
-    font-family: 'Courier New', Courier, monospace !important;
-    font-size: 0.85rem !important;
+hr {
+    border-color: var(--line) !important;
 }
+
+/* 3-Column QuickLiquid File Panels */
+.ql-col-panel {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(148, 163, 184, 0.03) 100%);
+    backdrop-filter: blur(14px) saturate(1.7);
+    -webkit-backdrop-filter: blur(14px) saturate(1.7);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-rim), var(--glass-shadow);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.ql-col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.ql-col-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+.ql-col-badge {
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: var(--mono);
+    background: rgba(125, 233, 255, 0.12);
+    color: var(--acc-a);
+    border: 1px solid rgba(125, 233, 255, 0.28);
+}
+
+.ql-file-list {
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 4px;
+}
+
+.ql-file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0.55rem 0.75rem;
+    border-radius: 10px;
+    background: rgba(12, 17, 32, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.10);
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s var(--spring);
+}
+
+.ql-file-item:hover {
+    background: rgba(148, 163, 184, 0.10);
+    border-color: rgba(125, 233, 255, 0.32);
+    transform: translateX(2px);
+}
+
+.ql-file-name {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--text);
+    word-break: break-all;
+}
+
+.ql-file-link {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--acc-a);
+    text-decoration: none;
+    word-break: break-all;
+    border-bottom: 1px dashed rgba(125, 233, 255, 0.35);
+    transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.ql-file-link:hover {
+    color: #ffffff;
+    border-bottom-color: var(--acc-a);
+}
+
+.ql-file-meta {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.ql-empty {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+}
+
+/* Unified QuickLiquid Glass Table */
+.ql-table-panel {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(148, 163, 184, 0.03) 100%);
+    backdrop-filter: blur(14px) saturate(1.7);
+    -webkit-backdrop-filter: blur(14px) saturate(1.7);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-rim), var(--glass-shadow);
+    padding: 1rem 1.2rem;
+    overflow: hidden;
+}
+
+.ql-table-scroll {
+    max-height: 640px;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+.ql-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+}
+
+.ql-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: rgba(10, 14, 26, 0.92);
+    backdrop-filter: blur(12px);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--line-strong);
+    text-align: left;
+}
+
+.ql-table thead th:first-child {
+    text-align: center;
+    width: 60px;
+}
+
+.ql-table thead th:nth-child(n+3) {
+    text-align: center;
+    width: 180px;
+}
+
+.ql-table tbody tr {
+    transition: background 0.16s ease;
+}
+
+.ql-table tbody tr:hover {
+    background: rgba(125, 233, 255, 0.06);
+}
+
+.ql-table tbody td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.09);
+    vertical-align: middle;
+}
+
+.ql-table tbody td:first-child {
+    text-align: center;
+}
+
+.ql-table tbody td:nth-child(n+3) {
+    text-align: center;
+}
+
+.ql-row-num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+}
+
+.ql-th-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.ql-stat-yes {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.14);
+    border: 1px solid rgba(52, 211, 153, 0.28);
+    border-radius: 999px;
+    padding: 1px 8px;
+}
+
+.ql-stat-no {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    border-radius: 999px;
+    padding: 1px 8px;
+}
+
+.ql-badge-yes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    padding: 0.22rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.ql-badge-no {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    padding: 0.22rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(239, 68, 68, 0.10);
+    color: rgba(248, 113, 113, 0.85);
+    border: 1px solid rgba(248, 113, 113, 0.22);
+}
+
