@@ -1,31 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&display=swap');
 
 /* ═══════════════════════════════════════════════════════════════
-   QuickLiquid Glass Theme for Legal AI Agent Dashboard
-   Based on: https://github.com/amarnath3003/quickLiquid
+   QuickLiquid Glass Theme — Multi-Theme Variable System
+   Default Theme: Лате (#5A5059 | #92887F | #B8ADAB | #D7EEF3 | #D18E5F)
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-    --bg: #04060c;
-    --bg-soft: #0a0e1a;
-    --panel: rgba(148, 163, 184, 0.06);
-    --panel-hover: rgba(148, 163, 184, 0.10);
-    --panel-solid: #0c1120;
-    --line: rgba(148, 163, 184, 0.14);
-    --line-strong: rgba(148, 163, 184, 0.28);
-    --text: #eaeffa;
-    --muted: rgba(234, 239, 250, 0.62);
-    --faint: rgba(234, 239, 250, 0.36);
-    --acc-a: #7de9ff;
-    --acc-b: #6d8bff;
-    --acc-c: #c084fc;
-    --coral: #ff9d7a;
-    --grad: linear-gradient(95deg, var(--acc-a), var(--acc-b) 48%, var(--acc-c));
+    --bg: #262126;
+    --bg-soft: #3a3339;
+    --panel-rgb: 90, 80, 89;
+    --soft-rgb: 58, 51, 57;
+    --acc-rgb: 209, 142, 95;
+    --ice-rgb: 215, 238, 243;
+    --line-rgb: 184, 173, 171;
+    --blob-1: rgba(209, 142, 95, 0.46);
+    --blob-2: rgba(215, 238, 243, 0.34);
+    --blob-3: rgba(146, 136, 127, 0.44);
+    --blob-4: rgba(90, 80, 89, 0.65);
+
+    --panel: rgba(var(--panel-rgb), 0.36);
+    --panel-hover: rgba(var(--acc-rgb), 0.20);
+    --panel-solid: var(--bg-soft);
+    --line: rgba(var(--line-rgb), 0.22);
+    --line-strong: rgba(var(--line-rgb), 0.40);
+    --text: #D7EEF3;
+    --muted: #B8ADAB;
+    --faint: #92887F;
+    --acc-a: #D18E5F;
+    --acc-b: #D7EEF3;
+    --acc-c: #B8ADAB;
+    --copper: #D18E5F;
+    --silver: #B8ADAB;
+    --taupe: #92887F;
+    --ice: #D7EEF3;
+    --grad: linear-gradient(95deg, #D18E5F, #B8ADAB 48%, #D7EEF3);
     --radius: 16px;
     --radius-lg: 20px;
-    --font: 'Outfit', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
     --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
-    --glass-rim: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --glass-rim: inset 0 1px 0 rgba(var(--ice-rgb), 0.20), inset 0 0 0 1px rgba(var(--line-rgb), 0.08);
     --glass-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.72);
     --spring: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -46,11 +59,11 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
 }
 
 ::selection {
-    background: rgba(125, 233, 255, 0.35);
-    color: #fff;
+    background: rgba(var(--acc-rgb), 0.38);
+    color: var(--text);
 }
 
-/* Custom QuickLiquid Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -61,19 +74,20 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #24437a, #45327a);
+    background: linear-gradient(180deg, var(--taupe), var(--acc-a));
     border-radius: 8px;
     border: 2px solid var(--bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #3b6cc4, #704cc4);
+    background: linear-gradient(180deg, var(--muted), var(--acc-a));
 }
 
 /* App Background */
 [data-testid="stAppViewContainer"] {
-    background: radial-gradient(1200px 700px at 15% -10%, rgba(109, 139, 255, 0.10), transparent 60%),
-                radial-gradient(900px 600px at 85% 10%, rgba(192, 132, 252, 0.09), transparent 55%),
+    background: radial-gradient(1100px 680px at 14% -8%, rgba(var(--acc-rgb), 0.16), transparent 60%),
+                radial-gradient(900px 600px at 88% 12%, rgba(var(--ice-rgb), 0.12), transparent 58%),
+                radial-gradient(800px 550px at 50% 90%, rgba(var(--panel-rgb), 0.45), transparent 65%),
                 var(--bg) !important;
     color: var(--text) !important;
 }
@@ -83,21 +97,38 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
     z-index: 1;
 }
 
-/* Transparent Glass Top Header */
-[data-testid="stHeader"] {
-    background: rgba(4, 6, 12, 0.55) !important;
-    backdrop-filter: blur(16px) saturate(1.6) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
-    border-bottom: 1px solid var(--line) !important;
+[data-testid="stMainBlockContainer"] {
+    padding-top: 4px !important;
 }
 
-/* Ambient Goo Field (QuickLiquid Signature Background) */
+/* Remove flex-gap spacing from hidden style / background elements above the header */
+[data-testid="stElementContainer"]:has(> [data-testid="stMarkdownContainer"] style),
+[data-testid="stElementContainer"]:has(.goo-field) {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Hide Streamlit Default Header, Sidebar & Toolbar */
+[data-testid="stHeader"],
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"],
+#MainMenu,
+[data-testid="stMainMenu"],
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+/* Ambient Goo Field */
 .goo-field {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.38;
+    opacity: 0.42;
     overflow: hidden;
 }
 
@@ -118,7 +149,7 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
     height: 360px;
     top: 4%;
     left: -5%;
-    background: radial-gradient(circle, rgba(23, 60, 140, 0.55), rgba(23, 60, 140, 0.16) 70%);
+    background: radial-gradient(circle, var(--blob-1), rgba(var(--panel-rgb), 0.18) 70%);
     animation: ql-goo-a 34s ease-in-out infinite alternate;
 }
 
@@ -127,16 +158,16 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
     height: 280px;
     top: 16%;
     right: -4%;
-    background: radial-gradient(circle, rgba(88, 40, 150, 0.48), rgba(88, 40, 150, 0.14) 70%);
+    background: radial-gradient(circle, var(--blob-2), rgba(var(--panel-rgb), 0.14) 70%);
     animation: ql-goo-b 41s ease-in-out infinite alternate;
 }
 
 .goo-blob.gb3 {
-    width: 230px;
-    height: 230px;
+    width: 240px;
+    height: 240px;
     top: 52%;
     left: 10%;
-    background: radial-gradient(circle, rgba(16, 88, 120, 0.45), rgba(16, 88, 120, 0.12) 70%);
+    background: radial-gradient(circle, var(--blob-3), rgba(var(--panel-rgb), 0.14) 70%);
     animation: ql-goo-b 29s ease-in-out infinite alternate-reverse;
 }
 
@@ -145,7 +176,7 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
     height: 310px;
     bottom: 6%;
     right: 10%;
-    background: radial-gradient(circle, rgba(37, 52, 132, 0.46), rgba(37, 52, 132, 0.12) 70%);
+    background: radial-gradient(circle, var(--blob-4), rgba(var(--acc-rgb), 0.16) 70%);
     animation: ql-goo-a 37s ease-in-out infinite alternate-reverse;
 }
 
@@ -159,68 +190,148 @@ code, pre, [data-testid="stCode"], [data-testid="stCode"] * {
     to { transform: translate3d(-90px, 80px, 0) scale(1.18); }
 }
 
-/* Sidebar: Thick Frosted Liquid Glass */
-[data-testid="stSidebar"] {
-    background: rgba(10, 14, 26, 0.72) !important;
-    backdrop-filter: blur(22px) saturate(1.8) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(1.8) !important;
-    border-right: 1px solid var(--line) !important;
-    box-shadow: 12px 0 40px -20px rgba(0, 0, 0, 0.8) !important;
+/* Custom Top Header Bar (Brand Left, Theme Switcher Right) */
+div[data-testid="stHorizontalBlock"]:has(.ql-brand) {
+    position: sticky;
+    top: 4px;
+    z-index: 50;
+    align-items: center !important;
+    background: rgba(var(--soft-rgb), 0.78);
+    backdrop-filter: blur(18px) saturate(1.6);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--glass-rim), var(--glass-shadow);
 }
 
-[data-testid="stSidebar"] hr {
-    border-color: var(--line) !important;
+div[data-testid="stHorizontalBlock"]:has(.ql-brand) [data-testid="stColumn"] {
+    display: flex !important;
+    align-items: center !important;
+}
+
+div[data-testid="stHorizontalBlock"]:has(.ql-brand) [data-testid="stVerticalBlock"],
+div[data-testid="stHorizontalBlock"]:has(.ql-brand) [data-testid="stElementContainer"],
+div[data-testid="stHorizontalBlock"]:has(.ql-brand) [data-testid="stMarkdownContainer"] {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+}
+
+.ql-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.15rem 0.5rem;
+    line-height: 1;
+}
+
+.ql-logo-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--grad);
+    box-shadow: 0 4px 16px -4px rgba(var(--acc-rgb), 0.55);
+}
+
+.ql-brand-name {
+    font-family: var(--mono) !important;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+}
+
+/* Theme Switcher Color Circles */
+.st-key-theme_dot_Лате button,
+.st-key-theme_dot_Сланець button,
+.st-key-theme_dot_Літо button,
+.st-key-theme_dot_Місто button {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    border: 2px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35) !important;
+    transition: transform 0.2s var(--spring), box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.st-key-theme_dot_Лате button {
+    background: linear-gradient(135deg, #D18E5F 0%, #5A5059 100%) !important;
+}
+
+.st-key-theme_dot_Сланець button {
+    background: linear-gradient(135deg, #BA897A 0%, #353C52 100%) !important;
+}
+
+.st-key-theme_dot_Літо button {
+    background: linear-gradient(135deg, #FEE16C 0%, #22352C 100%) !important;
+}
+
+.st-key-theme_dot_Місто button {
+    background: linear-gradient(135deg, #78B4B7 0%, #83241E 100%) !important;
+}
+
+.st-key-theme_dot_Лате button:hover,
+.st-key-theme_dot_Сланець button:hover,
+.st-key-theme_dot_Літо button:hover,
+.st-key-theme_dot_Місто button:hover {
+    transform: scale(1.16) !important;
+    border-color: #ffffff !important;
+}
+
+.st-key-theme_dot_Лате button[kind="primary"],
+.st-key-theme_dot_Сланець button[kind="primary"],
+.st-key-theme_dot_Літо button[kind="primary"],
+.st-key-theme_dot_Місто button[kind="primary"] {
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc-a) !important;
+    transform: scale(1.12) !important;
 }
 
 /* Hero & Display Typography */
-.ql-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 14px;
-    border-radius: 999px;
-    background: rgba(125, 233, 255, 0.08);
-    border: 1px solid rgba(125, 233, 255, 0.24);
-    box-shadow: var(--glass-rim);
-    backdrop-filter: blur(6px) saturate(1.5);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--acc-a);
-    margin-bottom: 0.75rem;
-}
-
 .main-title {
-    font-weight: 600 !important;
-    font-size: clamp(2rem, 3.6vw, 2.85rem) !important;
-    letter-spacing: -0.02em !important;
+    font-weight: 700 !important;
+    font-size: clamp(2.6rem, 5vw, 3.8rem) !important;
+    letter-spacing: 0.04em !important;
     line-height: 1.1 !important;
-    margin: 0 0 0.4rem 0 !important;
+    margin: 0.5rem 0 0.4rem 0 !important;
+    text-align: center !important;
+    width: 100% !important;
     color: var(--text) !important;
 }
 
 .main-title .ink {
-    font-style: italic;
-    font-weight: 500;
+    font-style: normal;
+    font-weight: 700;
     background: var(--grad);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    padding-right: 0.08em;
+    padding-right: 0.04em;
 }
 
 .ql-subtitle {
     color: var(--muted) !important;
     font-size: 1.02rem !important;
     margin-bottom: 1.25rem !important;
+    text-align: center !important;
 }
 
 /* Regular Liquid Glass Metric Cards */
 div[data-testid="stMetric"] {
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.075) 0%, rgba(148, 163, 184, 0.04) 100%) !important;
-    backdrop-filter: blur(14px) saturate(1.7) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(1.7) !important;
+    background: linear-gradient(155deg, rgba(var(--panel-rgb), 0.55) 0%, rgba(var(--soft-rgb), 0.45) 100%) !important;
+    backdrop-filter: blur(14px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.5) !important;
     border: 1px solid var(--line) !important;
     border-radius: var(--radius-lg) !important;
     padding: 1.25rem 1.35rem !important;
@@ -235,8 +346,8 @@ div[data-testid="stMetric"] {
 
 div[data-testid="stMetric"]:hover {
     transform: translateY(-3px);
-    border-color: rgba(125, 233, 255, 0.42) !important;
-    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(109, 139, 255, 0.32) !important;
+    border-color: rgba(var(--acc-rgb), 0.55) !important;
+    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(var(--acc-rgb), 0.28) !important;
 }
 
 div[data-testid="stMetricLabel"] p {
@@ -281,27 +392,27 @@ div[data-testid="stMetric"] > div {
 /* Pill Buttons (Primary Gradient & Ghost Glass) */
 button[kind="primary"], [data-testid="stFormSubmitButton"] button {
     background: var(--grad) !important;
-    color: #051018 !important;
+    color: var(--bg) !important;
     border: none !important;
     border-radius: 999px !important;
     font-weight: 600 !important;
     padding: 0.55rem 1.35rem !important;
-    box-shadow: 0 8px 30px -8px rgba(109, 139, 255, 0.6) !important;
+    box-shadow: 0 8px 30px -8px rgba(var(--acc-rgb), 0.55) !important;
     transition: transform 0.2s var(--spring), box-shadow 0.2s ease !important;
 }
 
 button[kind="primary"] *, [data-testid="stFormSubmitButton"] button * {
-    color: #051018 !important;
+    color: var(--bg) !important;
 }
 
 button[kind="primary"]:hover:not(:disabled), [data-testid="stFormSubmitButton"] button:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 14px 38px -8px rgba(125, 233, 255, 0.72) !important;
+    box-shadow: 0 14px 38px -8px rgba(var(--acc-rgb), 0.72) !important;
 }
 
 button[kind="secondary"], [data-testid="stDownloadButton"] button {
-    background: rgba(148, 163, 184, 0.08) !important;
-    backdrop-filter: blur(8px) saturate(1.5) !important;
+    background: rgba(var(--panel-rgb), 0.45) !important;
+    backdrop-filter: blur(8px) saturate(1.4) !important;
     color: var(--text) !important;
     border: 1px solid var(--line-strong) !important;
     border-radius: 999px !important;
@@ -311,8 +422,8 @@ button[kind="secondary"], [data-testid="stDownloadButton"] button {
 }
 
 button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] button:hover:not(:disabled) {
-    background: rgba(148, 163, 184, 0.16) !important;
-    border-color: rgba(125, 233, 255, 0.45) !important;
+    background: rgba(var(--acc-rgb), 0.24) !important;
+    border-color: var(--acc-a) !important;
     transform: translateY(-1px);
 }
 
@@ -322,10 +433,10 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
 }
 
 .st-key-scrape_pdfs_btn button {
-    background: linear-gradient(155deg, rgba(125, 233, 255, 0.11) 0%, rgba(109, 139, 255, 0.08) 100%) !important;
-    backdrop-filter: blur(14px) saturate(1.7) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(1.7) !important;
-    border: 1px solid rgba(125, 233, 255, 0.28) !important;
+    background: linear-gradient(155deg, rgba(var(--acc-rgb), 0.20) 0%, rgba(var(--panel-rgb), 0.58) 100%) !important;
+    backdrop-filter: blur(14px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.5) !important;
+    border: 1px solid rgba(var(--acc-rgb), 0.45) !important;
     border-radius: var(--radius-lg) !important;
     box-shadow: var(--glass-rim), var(--glass-shadow) !important;
     padding: 1.05rem 1.35rem !important;
@@ -342,8 +453,8 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
 
 .st-key-scrape_pdfs_btn button:hover:not(:disabled) {
     transform: translateY(-3px) !important;
-    border-color: rgba(125, 233, 255, 0.65) !important;
-    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(125, 233, 255, 0.36) !important;
+    border-color: var(--acc-a) !important;
+    box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(var(--acc-rgb), 0.42) !important;
 }
 
 .st-key-scrape_pdfs_btn button p {
@@ -352,57 +463,27 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
     color: var(--text) !important;
 }
 
-/* Tabs as QuickLiquid Pill Chips */
-[data-testid="stTabs"] [role="tablist"] {
-    gap: 8px;
-    background: rgba(148, 163, 184, 0.05);
-    backdrop-filter: blur(10px) saturate(1.5);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 5px;
-    width: fit-content;
-    margin-bottom: 1rem;
-}
-
-[data-testid="stTabs"] button[role="tab"] {
-    border-radius: 999px !important;
-    padding: 6px 18px !important;
-    color: var(--muted) !important;
-    border: 1px solid transparent !important;
-    background: transparent !important;
-    font-weight: 600 !important;
-    transition: all 0.2s var(--spring) !important;
-}
-
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(125, 233, 255, 0.16), rgba(109, 139, 255, 0.18)) !important;
-    color: var(--text) !important;
-    border-color: rgba(125, 233, 255, 0.4) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 16px -4px rgba(109, 139, 255, 0.35) !important;
-}
-
-[data-testid="stTabs"] [data-baseweb="tab-highlight"],
-[data-testid="stTabs"] [data-baseweb="tab-border"] {
-    display: none !important;
-}
-
 /* Inputs, Textareas & Selectboxes (Thin Glass) */
 [data-baseweb="select"] > div,
 [data-testid="stTextInput"] input,
 [data-testid="stTextArea"] textarea {
-    background: rgba(12, 17, 32, 0.72) !important;
-    backdrop-filter: blur(8px) saturate(1.5) !important;
+    background: rgba(var(--soft-rgb), 0.72) !important;
+    backdrop-filter: blur(8px) saturate(1.4) !important;
     border: 1px solid var(--line) !important;
     border-radius: 12px !important;
     color: var(--text) !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
+[data-testid="stTextInput"] input::placeholder {
+    color: var(--faint) !important;
+}
+
 [data-baseweb="select"] > div:focus-within,
 [data-testid="stTextInput"] input:focus,
 [data-testid="stTextArea"] textarea:focus {
     border-color: var(--acc-a) !important;
-    box-shadow: 0 0 0 2px rgba(125, 233, 255, 0.18) !important;
+    box-shadow: 0 0 0 2px rgba(var(--acc-rgb), 0.25) !important;
 }
 
 /* Expanders, Forms, Alerts & Dataframes */
@@ -410,110 +491,42 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
 [data-testid="stForm"],
 [data-testid="stDataFrame"] {
     background: var(--panel) !important;
-    backdrop-filter: blur(14px) saturate(1.6) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(1.6) !important;
+    backdrop-filter: blur(14px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.5) !important;
     border: 1px solid var(--line) !important;
     border-radius: var(--radius) !important;
     box-shadow: var(--glass-rim) !important;
 }
 
-[data-testid="stForm"] {
-    padding: 1.25rem !important;
-}
-
 [data-testid="stAlert"] {
-    background: rgba(148, 163, 184, 0.07) !important;
-    backdrop-filter: blur(10px) saturate(1.5) !important;
+    background: rgba(var(--panel-rgb), 0.42) !important;
+    backdrop-filter: blur(10px) saturate(1.4) !important;
     border: 1px solid var(--line) !important;
     border-radius: var(--radius) !important;
 }
 
 /* Code / Console Logs */
 [data-testid="stCode"], pre {
-    background: #060a14 !important;
+    background: rgba(var(--soft-rgb), 0.90) !important;
     border: 1px solid var(--line) !important;
     border-radius: var(--radius) !important;
     box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.45) !important;
-}
-
-/* Status Pills */
-.status-pill {
-    padding: 0.3rem 0.85rem;
-    border-radius: 9999px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    backdrop-filter: blur(8px) saturate(1.5);
-    box-shadow: var(--glass-rim);
-}
-
-.status-pill-green {
-    background-color: rgba(16, 185, 129, 0.14);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.35);
-}
-
-.status-pill-red {
-    background-color: rgba(239, 68, 68, 0.14);
-    color: #f87171;
-    border: 1px solid rgba(248, 113, 113, 0.35);
-}
-
-.status-pill-orange {
-    background-color: rgba(245, 158, 11, 0.14);
-    color: #fbbf24;
-    border: 1px solid rgba(251, 191, 36, 0.35);
-}
-
-/* Document Explorer Markdown Viewer */
-.ql-markdown-viewer {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(12, 17, 32, 0.65));
-    backdrop-filter: blur(14px) saturate(1.6);
-    -webkit-backdrop-filter: blur(14px) saturate(1.6);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--glass-rim), var(--glass-shadow);
-    padding: 1.25rem 1.4rem;
-    height: 750px;
-    overflow-y: auto;
-    line-height: 1.65;
-}
-
-/* Custom container for document explorer layout */
-.doc-box {
-    background-color: var(--panel);
-    backdrop-filter: blur(12px) saturate(1.5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    border-left: 4px solid var(--acc-b);
-}
-
-.doc-box-done {
-    border-left: 4px solid #34d399;
-}
-
-.doc-box-missing {
-    border-left: 4px solid #fbbf24;
 }
 
 hr {
     border-color: var(--line) !important;
 }
 
-/* 3-Column QuickLiquid File Panels */
-.ql-col-panel {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(148, 163, 184, 0.03) 100%);
-    backdrop-filter: blur(14px) saturate(1.7);
-    -webkit-backdrop-filter: blur(14px) saturate(1.7);
+/* Unified QuickLiquid Glass Table */
+.ql-table-panel {
+    background: linear-gradient(160deg, rgba(var(--panel-rgb), 0.52) 0%, rgba(var(--soft-rgb), 0.42) 100%);
+    backdrop-filter: blur(14px) saturate(1.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.5);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--glass-rim), var(--glass-shadow);
-    padding: 1rem 1.1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 1.2rem;
+    overflow: hidden;
 }
 
 .ql-col-header {
@@ -534,41 +547,14 @@ hr {
 }
 
 .ql-col-badge {
-    padding: 0.2rem 0.65rem;
+    padding: 0.2rem 0.7rem;
     border-radius: 999px;
     font-size: 0.78rem;
     font-weight: 600;
     font-family: var(--mono);
-    background: rgba(125, 233, 255, 0.12);
+    background: rgba(var(--acc-rgb), 0.16);
     color: var(--acc-a);
-    border: 1px solid rgba(125, 233, 255, 0.28);
-}
-
-.ql-file-list {
-    max-height: 600px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-right: 4px;
-}
-
-.ql-file-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 0.55rem 0.75rem;
-    border-radius: 10px;
-    background: rgba(12, 17, 32, 0.55);
-    border: 1px solid rgba(148, 163, 184, 0.10);
-    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s var(--spring);
-}
-
-.ql-file-item:hover {
-    background: rgba(148, 163, 184, 0.10);
-    border-color: rgba(125, 233, 255, 0.32);
-    transform: translateX(2px);
+    border: 1px solid rgba(var(--acc-rgb), 0.38);
 }
 
 .ql-file-name {
@@ -581,23 +567,16 @@ hr {
 .ql-file-link {
     font-family: var(--mono);
     font-size: 0.82rem;
-    color: var(--acc-a);
+    color: var(--text);
     text-decoration: none;
     word-break: break-all;
-    border-bottom: 1px dashed rgba(125, 233, 255, 0.35);
+    border-bottom: 1px dashed rgba(var(--acc-rgb), 0.55);
     transition: color 0.16s ease, border-color 0.16s ease;
 }
 
 .ql-file-link:hover {
-    color: #ffffff;
+    color: var(--acc-a);
     border-bottom-color: var(--acc-a);
-}
-
-.ql-file-meta {
-    font-family: var(--mono);
-    font-size: 0.74rem;
-    color: var(--muted);
-    white-space: nowrap;
 }
 
 .ql-empty {
@@ -605,18 +584,6 @@ hr {
     font-size: 0.9rem;
     padding: 1.5rem 0.5rem;
     text-align: center;
-}
-
-/* Unified QuickLiquid Glass Table */
-.ql-table-panel {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(148, 163, 184, 0.03) 100%);
-    backdrop-filter: blur(14px) saturate(1.7);
-    -webkit-backdrop-filter: blur(14px) saturate(1.7);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--glass-rim), var(--glass-shadow);
-    padding: 1rem 1.2rem;
-    overflow: hidden;
 }
 
 .ql-table-scroll {
@@ -636,7 +603,7 @@ hr {
     position: sticky;
     top: 0;
     z-index: 2;
-    background: rgba(10, 14, 26, 0.92);
+    background: rgba(var(--soft-rgb), 0.95);
     backdrop-filter: blur(12px);
     color: var(--muted);
     font-weight: 600;
@@ -663,12 +630,12 @@ hr {
 }
 
 .ql-table tbody tr:hover {
-    background: rgba(125, 233, 255, 0.06);
+    background: rgba(var(--acc-rgb), 0.10);
 }
 
 .ql-table tbody td {
     padding: 0.65rem 1rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.09);
+    border-bottom: 1px solid rgba(var(--line-rgb), 0.12);
     vertical-align: middle;
 }
 
@@ -700,17 +667,17 @@ hr {
 }
 
 .ql-stat-yes {
-    color: #34d399;
-    background: rgba(16, 185, 129, 0.14);
-    border: 1px solid rgba(52, 211, 153, 0.28);
+    color: var(--text);
+    background: rgba(var(--ice-rgb), 0.14);
+    border: 1px solid rgba(var(--ice-rgb), 0.34);
     border-radius: 999px;
     padding: 1px 8px;
 }
 
 .ql-stat-no {
-    color: #f87171;
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(248, 113, 113, 0.25);
+    color: var(--acc-a);
+    background: rgba(var(--acc-rgb), 0.16);
+    border: 1px solid rgba(var(--acc-rgb), 0.38);
     border-radius: 999px;
     padding: 1px 8px;
 }
@@ -724,10 +691,23 @@ hr {
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 600;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.35);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: rgba(var(--ice-rgb), 0.15);
+    color: var(--text);
+    border: 1px solid rgba(var(--ice-rgb), 0.38);
+    box-shadow: inset 0 1px 0 rgba(var(--ice-rgb), 0.16);
+}
+
+.ql-badge-link {
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.16s var(--spring), border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.ql-badge-link:hover {
+    transform: translateY(-1px);
+    border-color: var(--acc-a);
+    color: var(--acc-a);
+    box-shadow: 0 4px 14px -4px rgba(var(--acc-rgb), 0.45);
 }
 
 .ql-badge-no {
@@ -739,8 +719,50 @@ hr {
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 600;
-    background: rgba(239, 68, 68, 0.10);
-    color: rgba(248, 113, 113, 0.85);
-    border: 1px solid rgba(248, 113, 113, 0.22);
+    background: rgba(var(--acc-rgb), 0.16);
+    color: var(--acc-a);
+    border: 1px solid rgba(var(--acc-rgb), 0.40);
 }
 
+/* Built-in Markdown Viewer / Preview Pane */
+.ql-md-preview {
+    background: linear-gradient(160deg, rgba(var(--panel-rgb), 0.50) 0%, rgba(var(--soft-rgb), 0.45) 100%);
+    backdrop-filter: blur(14px) saturate(1.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-rim), var(--glass-shadow);
+    padding: 1.25rem 1.4rem;
+    height: 650px;
+    overflow-y: auto;
+    line-height: 1.65;
+    font-size: 0.9rem;
+}
+
+.ql-md-preview h1,
+.ql-md-preview h2,
+.ql-md-preview h3 {
+    color: var(--acc-a);
+    margin-top: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.ql-md-preview blockquote {
+    border-left: 3px solid var(--acc-a);
+    padding-left: 0.9rem;
+    color: var(--muted);
+    margin: 0.75rem 0;
+}
+
+.ql-md-preview table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+}
+
+.ql-md-preview th,
+.ql-md-preview td {
+    border: 1px solid var(--line);
+    padding: 0.45rem 0.7rem;
+    text-align: left;
+}
