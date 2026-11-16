@@ -1,4 +1,22 @@
 # List of PDFs missing corresponding Markdown folders
 
-- Oglyad_VS_korporat_sporu.pdf
-- WEB-Overview_bankruptcy_in_Ukraine.pdf
+- Oglyad_Derzhpraci_2018_2026.pdf
+- Oglyad_ESPL_07_2026.pdf
+- Oglyad_ESPL_Zemeln_mainov_sporu.pdf
+- Oglyad_KAS_08_2026.pdf
+- Oglyad_KAS_09_2026.pdf
+- Oglyad_KAS_Ohorona_kylturn_spad.pdf
+- Oglyad_KCS_08_2026.pdf
+- Oglyad_KCS_09_2026.pdf
+- Oglyad_KCS_11_2025.pdf.pdf
+- Oglyad_KCS_Tcuv_sporu_viiskovosl_veteranu_viinu.pdf
+- Oglyad_KCS_spilk_vuhov_ditu_2024_08_2026.pdf
+- Oglyad_KGS_09_2026.pdf
+- Oglyad_KGS_10_2026.pdf
+- Oglyad_KKS_08_2026.pdf
+- Oglyad_KKS_09_2026_1.pdf
+- Oglyad_KKS_apel_oskarzh_uhval_slidch_suddiv.pdf
+- Oglyad_KKS_domashnye_nasylstvo_2019_2026.pdf
+- Oglyad_KKS_st_296_hyliganstvo_2026.pdf
+- Oglyad_Zlovzhiv_bankrutstvo.pdf
+- Zbirnik_02_10_2026.pdf

@@ -128,6 +128,13 @@ def convert_pdfs_to_md(filename_filter=None):
             
             md_content = pymupdf4llm.to_markdown(tmp_pdf_path)
 
+            # Save locally to agents/markdown/{normalized_name}/{normalized_name}.md
+            local_md_dir = os.path.join(os.path.dirname(__file__), 'markdown', normalized_name)
+            os.makedirs(local_md_dir, exist_ok=True)
+            local_md_path = os.path.join(local_md_dir, f"{normalized_name}.md")
+            with open(local_md_path, 'w', encoding='utf-8') as local_f:
+                local_f.write(md_content)
+
             with tempfile.NamedTemporaryFile(mode='w', suffix=".md", delete=False, encoding='utf-8') as tmp_md:
                 tmp_md_path = tmp_md.name
                 tmp_md.write(md_content)

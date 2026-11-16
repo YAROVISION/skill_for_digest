@@ -427,12 +427,16 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
     transform: translateY(-1px);
 }
 
-/* Metric-Card Action Button (PDF у agents/pdfs) */
-.st-key-scrape_pdfs_btn {
+/* Metric-Card Action Buttons */
+.st-key-scrape_pdfs_btn,
+.st-key-sync_minio_btn,
+.st-key-convert_md_btn {
     height: 100%;
 }
 
-.st-key-scrape_pdfs_btn button {
+.st-key-scrape_pdfs_btn button,
+.st-key-sync_minio_btn button,
+.st-key-convert_md_btn button {
     background: linear-gradient(155deg, rgba(var(--acc-rgb), 0.20) 0%, rgba(var(--panel-rgb), 0.58) 100%) !important;
     backdrop-filter: blur(14px) saturate(1.5) !important;
     -webkit-backdrop-filter: blur(14px) saturate(1.5) !important;
@@ -451,13 +455,17 @@ button[kind="secondary"]:hover:not(:disabled), [data-testid="stDownloadButton"] 
     transition: transform 0.28s var(--spring), box-shadow 0.28s ease, border-color 0.28s ease !important;
 }
 
-.st-key-scrape_pdfs_btn button:hover:not(:disabled) {
+.st-key-scrape_pdfs_btn button:hover:not(:disabled),
+.st-key-sync_minio_btn button:hover:not(:disabled),
+.st-key-convert_md_btn button:hover:not(:disabled) {
     transform: translateY(-3px) !important;
     border-color: var(--acc-a) !important;
     box-shadow: var(--glass-rim), 0 22px 48px -16px rgba(var(--acc-rgb), 0.42) !important;
 }
 
-.st-key-scrape_pdfs_btn button p {
+.st-key-scrape_pdfs_btn button p,
+.st-key-sync_minio_btn button p,
+.st-key-convert_md_btn button p {
     margin: 0 !important;
     line-height: 1.35 !important;
     color: var(--text) !important;

@@ -13,6 +13,8 @@ sys.path.append(ROOT_DIR)
 LOCAL_PDFS_DIR = os.path.join(ROOT_DIR, "agents", "pdfs")
 LOCAL_MARKDOWN_DIR = os.path.join(ROOT_DIR, "agents", "markdown")
 SCRAPER_LOG_PATH = os.path.join(ROOT_DIR, "scratch", "scrape_pdfs.log")
+SYNC_LOG_PATH = os.path.join(ROOT_DIR, "scratch", "sync_minio.log")
+CONVERTER_LOG_PATH = os.path.join(ROOT_DIR, "scratch", "convert_md.log")
 DOWNLOAD_HISTORY_PATH = os.path.join(ROOT_DIR, "agents", "lists", "download_history.md")
 
 THEMES = {
@@ -426,15 +428,33 @@ all_files = sorted(
     ),
 )
 
-# Summary Metrics & Action Button
+# Summary Metrics & Action Buttons
 if "scraper_active" not in st.session_state:
     st.session_state.scraper_active = False
     st.session_state.scraper_pid = None
+
+if "sync_active" not in st.session_state:
+    st.session_state.sync_active = False
+    st.session_state.sync_pid = None
+
+if "converter_active" not in st.session_state:
+    st.session_state.converter_active = False
+    st.session_state.converter_pid = None
 
 if st.session_state.scraper_active and st.session_state.scraper_pid:
     if not is_process_running(st.session_state.scraper_pid):
         st.session_state.scraper_active = False
         st.session_state.scraper_pid = None
+
+if st.session_state.sync_active and st.session_state.sync_pid:
+    if not is_process_running(st.session_state.sync_pid):
+        st.session_state.sync_active = False
+        st.session_state.sync_pid = None
+
+if st.session_state.converter_active and st.session_state.converter_pid:
+    if not is_process_running(st.session_state.converter_pid):
+        st.session_state.converter_active = False
+        st.session_state.converter_pid = None
 
 m1, m2, m3 = st.columns(3)
 with m1:
@@ -468,9 +488,63 @@ with m1:
         st.rerun()
 
 with m2:
-    st.metric(label="PDF у MinIO (pdfs/)", value=f"{len(minio_set)}")
+    sync_btn_label = (
+        f"PDF у MinIO (pdfs/)\n\n**{len(minio_set)}**\n\n⏳ Синхронізація з agents/pdfs..."
+        if st.session_state.sync_active
+        else f"PDF у MinIO (pdfs/)\n\n**{len(minio_set)}**\n\n🔁 Синхронізувати з agents/pdfs"
+    )
+    if st.button(
+        sync_btn_label,
+        key="sync_minio_btn",
+        use_container_width=True,
+        disabled=st.session_state.sync_active,
+        help="Двостороння синхронізація PDF-файлів між MinIO (pdfs/) та локальною папкою agents/pdfs",
+    ):
+        os.makedirs(os.path.dirname(SYNC_LOG_PATH), exist_ok=True)
+        with open(SYNC_LOG_PATH, "w", encoding="utf-8") as f:
+            f.write(
+                f"=== [Синхронізація MinIO ↔ agents/pdfs: {time.strftime('%Y-%m-%d %H:%M:%S')}] ===\n\n"
+            )
+        sync_log_f = open(SYNC_LOG_PATH, "a", encoding="utf-8")
+        sync_proc = subprocess.Popen(
+            [sys.executable, "-u", "agents/sync_pdfs.py"],
+            cwd=ROOT_DIR,
+            stdout=sync_log_f,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        st.session_state.sync_pid = sync_proc.pid
+        st.session_state.sync_active = True
+        st.rerun()
 with m3:
-    st.metric(label="Оброблено в agents/markdown", value=f"{len(markdown_set)}")
+    md_btn_label = (
+        f"Оброблено в agents/markdown\n\n**{len(markdown_set)}**\n\n⏳ Конвертація PDF у MD..."
+        if st.session_state.converter_active
+        else f"Оброблено в agents/markdown\n\n**{len(markdown_set)}**\n\n📝 Конвертувати PDF у MD"
+    )
+    if st.button(
+        md_btn_label,
+        key="convert_md_btn",
+        use_container_width=True,
+        disabled=st.session_state.converter_active,
+        help="Запустити convert_pdfs_to_md.py для перетворення нових PDF у Markdown",
+    ):
+        os.makedirs(os.path.dirname(CONVERTER_LOG_PATH), exist_ok=True)
+        with open(CONVERTER_LOG_PATH, "w", encoding="utf-8") as f:
+            f.write(
+                f"=== [Конвертація PDF у Markdown: {time.strftime('%Y-%m-%d %H:%M:%S')}] ===\n\n"
+            )
+        conv_log_f = open(CONVERTER_LOG_PATH, "a", encoding="utf-8")
+        conv_proc = subprocess.Popen(
+            [sys.executable, "-u", "agents/convert_pdfs_to_md.py"],
+            cwd=ROOT_DIR,
+            stdout=conv_log_f,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        st.session_state.converter_pid = conv_proc.pid
+        st.session_state.converter_active = True
+        st.rerun()
 
 with st.expander(
     "📜 Журнал скачаних файлів (agents/lists/download_history.md)",
@@ -486,8 +560,31 @@ with st.expander(
     else:
         st.info("Файл журналу `agents/lists/download_history.md` ще не створено (нових скачувань не було).")
 
-if st.session_state.scraper_active:
-    st.caption("⏳ Перевірка сайту Верховного Суду та завантаження нових файлів...")
+if os.path.exists(SYNC_LOG_PATH):
+    with open(SYNC_LOG_PATH, "r", encoding="utf-8") as f:
+        sync_logs = f.read()
+    with st.expander(
+        "🔁 Лог синхронізації MinIO ↔ agents/pdfs",
+        expanded=st.session_state.sync_active,
+    ):
+        st.code(sync_logs, language="bash")
+
+if os.path.exists(CONVERTER_LOG_PATH):
+    with open(CONVERTER_LOG_PATH, "r", encoding="utf-8") as f:
+        converter_logs = f.read()
+    with st.expander(
+        "📝 Лог конвертації PDF у Markdown",
+        expanded=st.session_state.converter_active,
+    ):
+        st.code(converter_logs, language="bash")
+
+if st.session_state.scraper_active or st.session_state.sync_active or st.session_state.converter_active:
+    if st.session_state.scraper_active:
+        st.caption("⏳ Перевірка сайту Верховного Суду та завантаження нових файлів...")
+    if st.session_state.sync_active:
+        st.caption("⏳ Синхронізація PDF-файлів між MinIO та agents/pdfs...")
+    if st.session_state.converter_active:
+        st.caption("⏳ Конвертація нових PDF-файлів у Markdown...")
     time.sleep(1.5)
     st.rerun()
 
